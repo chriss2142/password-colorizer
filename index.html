@@ -31,17 +31,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 300px;
-            box-sizing: border-box; /* Ensure padding and border are included in the width */
-        }
-
-        #password {
-            width: 100%; /* Ensure input takes full width of the container */
-            font-size: 1.2em;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; /* Prevent padding from pushing content out */
+            box-sizing: border-box;
         }
 
         #output {
@@ -73,12 +63,43 @@
             color: #9400D3;
         }
 
+        #pasteButton {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        #pasteButton:hover {
+            background-color: #e0e0e0;
+        }
+
+        .input-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        #password {
+            width: 100%;
+            font-size: 1.2em;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
     </style>
-</head>
-<body>
+</head><body>
     <div id="app">
         <h2>Password Colorizer</h2>
-        <input type="text" id="password" placeholder="Paste your password here" oninput="colorizePassword()">
+        <button id="pasteButton">📋 Paste</button>
+        <div class="input-container">
+            <input type="text" id="password" placeholder="Enter your password here" oninput="colorizePassword()">
+        </div>
         <div id="output"></div>
     </div>
 
@@ -103,6 +124,16 @@
                 output.appendChild(span);
             }
         }
+
+        document.getElementById('pasteButton').addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('password').value = text;
+                colorizePassword();
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+            }
+        });
     </script>
 </body>
 </html>
