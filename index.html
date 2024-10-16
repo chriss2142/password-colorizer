@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#317EFB"/>
+    <title>Password Colorizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #app {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        #password {
+            width: 100%;
+            font-size: 1.2em;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #output {
+            display: inline-block;
+            font-size: 1.2em;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+        .lowercase {
+            color: #1E90FF;
+        }
+        .uppercase {
+            color: #32CD32;
+        }
+        .number {
+            color: #FF4500;
+        }
+        .special {
+            color: #9400D3;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>Password Colorizer</h2>
+        <input type="text" id="password" placeholder="Paste your password here" oninput="colorizePassword()">
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function colorizePassword() {
+            const password = document.getElementById('password').value;
+            const output = document.getElementById('output');
+            output.innerHTML = '';
+
+            for (let char of password) {
+                let span = document.createElement('span');
+                if (/[a-z]/.test(char)) {
+                    span.className = 'lowercase';
+                } else if (/[A-Z]/.test(char)) {
+                    span.className = 'uppercase';
+                } else if (/[0-9]/.test(char)) {
+                    span.className = 'number';
+                } else {
+                    span.className = 'special';
+                }
+                span.textContent = char;
+                output.appendChild(span);
+            }
+        }
+    </script>
+</body>
+</html>
